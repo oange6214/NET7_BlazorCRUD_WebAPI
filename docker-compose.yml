@@ -1,0 +1,13 @@
+version: '3.1'
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres-sampledb1
+    environment:
+      POSTGRES_USER: jed
+      POSTGRES_PASSWORD: 12345678
+      POSTGRES_DB: sampleBlazorDb1
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data:/var/lib/postgresql/data
