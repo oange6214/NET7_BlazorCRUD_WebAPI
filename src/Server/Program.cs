@@ -1,4 +1,5 @@
-using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
+using Server.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +7,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+var conn = builder.Configuration.GetConnectionString("SampleDbConnection");
+
+builder.Services.AddEntityFrameworkNpgsql()
+    .AddDbContext<ApiDbContext>(opt => opt.UseNpgsql(conn));
 
 var app = builder.Build();
 
