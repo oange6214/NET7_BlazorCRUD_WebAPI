@@ -18,14 +18,13 @@ public class DriversController : ControllerBase
         _context = context;
     }
 
-    [HttpGet]
     public async Task<ActionResult<List<Driver>>> GetDrivers()
     {
         var drivers = await _context.Drivers.ToListAsync();
         return Ok(drivers);
     }
 
-    [HttpGet]
+    [HttpGet("{id}")]
     public async Task<ActionResult<Driver>> GetDriverDetails(int id)
     {
         var driver = await _context.Drivers.FirstOrDefaultAsync(item => item.Id == id);
