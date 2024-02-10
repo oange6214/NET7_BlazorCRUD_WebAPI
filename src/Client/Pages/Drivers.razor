@@ -4,6 +4,9 @@
 
 <h1>Welcome to the Drivers Section</h1>
 
+<a href="@($"DriverDetails")" class="btn btn-success">Add New Driver</a>
+<br />
+
 <table class="table">
     <thead>
         <tr>
@@ -32,7 +35,9 @@
                 <td>@item.Name</td>
                 <td>@item.RacingNb</td>
                 <td>@item.Team</td>
-                <td></td>
+                <td>
+                    <a href="@($"DriverDetails/{item.Id}")" class="btn btn-warning">Edit</a>
+                </td>
             </tr>
         }
     </tbody>

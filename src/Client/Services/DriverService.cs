@@ -22,19 +22,24 @@ public class DriverService : IDriverService
 
             var response = await _httpClient.PostAsync("api/drivers", itemJson);
 
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStreamAsync();
+            var createdDriverUrl = response.Headers.Location;
 
-                var addedDriver = await JsonSerializer.DeserializeAsync<Driver>(responseBody, new JsonSerializerOptions
+            var getResponse = await _httpClient.GetAsync(createdDriverUrl);
+            if (getResponse.IsSuccessStatusCode)
+            {
+                var responseBody = await getResponse.Content.ReadAsStringAsync();
+                var addedDriver = JsonSerializer.Deserialize<Driver>(responseBody, new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true
                 });
 
                 return addedDriver;
             }
-
-            return null;
+            else
+            {
+                Console.WriteLine($"Error: Status code - {getResponse.StatusCode}");
+                return null;
+            }
         }
         catch (Exception ex)
         {
@@ -102,7 +107,7 @@ public class DriverService : IDriverService
     {
         try
         {
-            var itemJson = new StringContent(JsonSerializer.Serialize(driver), Encoding.UTF8, "applicationi/json");
+            var itemJson = new StringContent(JsonSerializer.Serialize(driver), Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PutAsync($"api/drivers/{driver.Id}", itemJson);
             

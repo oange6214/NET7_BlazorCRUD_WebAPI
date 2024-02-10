@@ -18,6 +18,7 @@ public class DriversController : ControllerBase
         _context = context;
     }
 
+    [HttpGet]
     public async Task<ActionResult<List<Driver>>> GetDrivers()
     {
         var drivers = await _context.Drivers.ToListAsync();
@@ -41,6 +42,7 @@ public class DriversController : ControllerBase
         _context.Drivers.Add(driver);
         await _context.SaveChangesAsync();
 
+        // return Ok(driver);
         return CreatedAtAction(nameof(GetDriverDetails), driver, driver.Id);
     }
 
