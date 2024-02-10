@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Server.Data;
@@ -41,8 +39,6 @@ public class DriversController : ControllerBase
     {
         _context.Drivers.Add(driver);
         await _context.SaveChangesAsync();
-
-        // return Ok(driver);
         return CreatedAtAction(nameof(GetDriverDetails), driver, driver.Id);
     }
 
